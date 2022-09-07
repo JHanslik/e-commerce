@@ -8,7 +8,7 @@ const productsRoutes = require("./routes/products");
 const ordersRoutes = require("./routes/orders");
 const categoriesRoutes = require("./routes/categories");
 
-const port = process.env.PORT;
+const port = process.env.DB_PORT;
 
 app.use(cors());
 app.use(express.json());
