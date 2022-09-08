@@ -1,14 +1,14 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    dialect: "mysql",
-    logging: false,
-  }
+    process.env.DB_DATABASE,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST,
+        dialect: "mysql",
+        logging: false,
+    }
 );
 
 const connectDb = async () => {
@@ -26,9 +26,9 @@ const Product = require("./products")(sequelize);
 const Order = require("./orders")(sequelize);
 const Category = require("./categories")(sequelize);
 
-Product.hasMany(Category);
+Product.belongsToMany(Category, { through: "product_category" });
 Category.belongsToMany(Product, { through: "product_category" });
-Order.hasMany(Product);
+Order.belongsToMany(Product, { through: "order_product" });
 Product.belongsToMany(Order, { through: "order_product" });
 
 sequelize.sync({ alter: true });
