@@ -1,10 +1,11 @@
-const { Product } = require("../models/index");
+const { Product, Category } = require("../models/index");
 
 const checkIfExists = async (req, res, next) => {
     const { id } = req.params;
 
     const product = await Product.findOne({
         where: { id },
+        include: Category,
     });
 
     if (product) {

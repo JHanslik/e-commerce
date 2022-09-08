@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { Product } = require("../models/index");
+const { Product, Category } = require("../models/index");
 const { checkIfExists, checkIfNameExists } = require("../middlewares/products");
 
 app.post("/", checkIfNameExists, async (req, res) => {
@@ -15,23 +15,24 @@ app.post("/", checkIfNameExists, async (req, res) => {
 
 app.get("/", async (req, res) => {
     try {
-        if (req.query.order === "ASC") {
-            const products = await Product.findAll({
-                order: [["name", "ASC"]],
-            });
-
-            res.json(products);
-        } else if (req.query.order === "DESC") {
-            const products = await Product.findAll({
-                order: [["name", "DESC"]],
-            });
-
-            res.json(products);
-        } else {
-            const products = await Product.findAll({});
-
-            res.json(products);
+        const clause = {};
+        if (req.query.order) {
+            clause.order = [["name", req.query.order]];
         }
+        if (req.query.category) {
+            clause.include = [
+                {
+                    model: Category,
+                    where: {
+                        id: req.query.category,
+                    },
+                },
+            ];
+        }
+
+        const products = await Product.findAll(clause);
+
+        res.json(products);
     } catch (e) {
         console.log(e);
         res.status(500).json("Internal server error");
