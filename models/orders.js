@@ -4,14 +4,15 @@ module.exports = (sequelize) => {
     const Order = sequelize.define("Order", {
         customerName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: "Benoit",
         },
         customerAdress: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: "17 avenue des champs Elysées",
         },
         customerEmail: {
             type: DataTypes.STRING,
+            defaultValue: "bgdu94@skyblog.bg",
         },
 
         totalPrice: {
