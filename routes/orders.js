@@ -3,10 +3,10 @@ const app = express();
 const { Order } = require("../models/index");
 const { checkIfExists, checkIfNameExists } = require("../middlewares/orders");
 
-app.post("/", checkIfNameExists, async (req, res) => {
+app.post("/", async (req, res) => {
     try {
         const order = await Order.create(req.body);
-        res.json(order);
+        res.status(201).json(order);
     } catch (e) {
         console.log(e);
         res.status(500).json("Internal server error");
