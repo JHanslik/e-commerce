@@ -12,12 +12,12 @@ const sequelize = new Sequelize(
 );
 
 const connectDb = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connected to db");
-    } catch (e) {
-        console.log(e);
-    }
+  try {
+    await sequelize.authenticate();
+    console.log("Connected to db");
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 connectDb();
@@ -34,10 +34,10 @@ Product.belongsToMany(Order, { through: "order_product" });
 sequelize.sync({ alter: true });
 
 const db = {
-    sequelize,
-    Product,
-    Order,
-    Category,
+  sequelize,
+  Product,
+  Order,
+  Category,
 };
 
 module.exports = db;
